@@ -1,8 +1,9 @@
 
 
 export class BaseResource {
-    private runMode: string;
-    private expectedResult: string;
+    runMode: string = null;
+    expectedResult: string = null;
+    testCaseDescription: string = null;
 
     public setRunMode(runMode: string) {
         this.runMode = runMode;
@@ -10,6 +11,10 @@ export class BaseResource {
 
     public setExpectedResult(expectedResult: string) {
         this.expectedResult = expectedResult;
+    }
+
+    public setTestCaseDescription(testCaseDescription: string) {
+        this.testCaseDescription = testCaseDescription;
     }
 
     public getRunMode(): string {

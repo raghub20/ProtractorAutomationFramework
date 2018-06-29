@@ -1,3 +1,4 @@
+import { BaseResource } from './../resources/base-resource';
 import { RegistrationResource } from './../resources/registration-resource';
 
 export class ObjectRepository {
@@ -17,5 +18,17 @@ export class ObjectRepository {
             props = Object.getOwnPropertyNames(instance);
         }
         return props;
+    }
+
+    public static initializeNullWithEmptyString(instance: Object): Object {
+        if(instance !== undefined && instance !== null) {
+            let props: string[] = this.getPropertiesOfObject(instance);
+            for(let prop of props) {
+                if(instance[prop] == null || instance[prop] == undefined) {
+                    instance[prop] = '';
+                }
+            }
+        }
+        return instance;
     }
 }

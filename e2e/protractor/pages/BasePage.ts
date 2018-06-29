@@ -38,5 +38,14 @@ export class BasePage {
         } catch (error) {
             return await Promise.reject(error);
         }
-    } 
+    }
+    
+    public isTestSkip(runVal: string): boolean {
+        let isRun = false;
+        console.log('inside=' + runVal);
+        if(runVal.toLowerCase() === 'yes') {
+            isRun = true;
+        }
+        return isRun;
+    }
 }

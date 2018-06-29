@@ -5,43 +5,33 @@ import { ExcelUtil } from './../util/excel-util';
 import { RegistrationPage } from './../pages/registration-page';
 import { browser } from 'protractor';
 import { WorkBook, WorkSheet, readFile, utils } from 'xlsx';
-describe('Registration page test suite', async() => {
-    const registrationPage = new RegistrationPage();
-    it('Verify by passing empty values in mandatory fields test case', async () => {
-        readTestData();
-        /* browser.manage().timeouts().implicitlyWait(10000);
+
+let using = require('jasmine-data-provider');
+let testDataArray = readTestData();
+describe('Registration page test suite', () => {
+    beforeEach(async () => {
         await browser.get('http://www.globalsqa.com/angularJs-protractor/registration-login-example/#/register');
-        try {
-            await registrationPage.enterFirstName('abc');
-            await registrationPage.enterLastName('xyz');
-            await registrationPage.enterUsername('abcxyz');
-            await registrationPage.enterPassword('Pass1234');
-            await registrationPage.clickOnRegisterButton();
-        } catch(error) {
-            fail(error);
-        }
-        browser.sleep(10000); */
+    })
+    using(testDataArray, (data) => {
+        const registrationPage = new RegistrationPage();
+        it(data.testCaseDescription, async () => {
+            try {
+                await registrationPage.enterFirstName(data.firstName);
+                await registrationPage.enterLastName(data.lastName);
+                await registrationPage.enterUsername(data.username);
+                await registrationPage.enterPassword(data.password);
+                await registrationPage.clickOnRegisterButton();
+            } catch(error) {
+                fail(error);
+            }
+        });
     });
 });
 
 
-async function readTestData() {
-    let excelUtil = new ExcelUtil('./e2e/protractor/regression-suite/TestData.xlsx');
-    let excelDataInJsonArray = excelUtil.getJsonFromSheet('Sheet1');
-    let mappingJson = await JsonUtil.convertJsonFileToJsonObject('./e2e/protractor/mappings/registration-mapping.json');
-    let targetedObj = ObjectRepository.getResourceObject(mappingJson['objectToCreate']);
-    let data: Object[] = new Array();
-    let targetedObjProperties:string[] = ObjectRepository.getPropertiesOfObject(targetedObj);
-    for(let row of excelDataInJsonArray) {
-        let targetedObj = ObjectRepository.getResourceObject(mappingJson['objectToCreate']);
-        let excelJsonKeys = JsonUtil.getKeysFromJson(row);
-        for(let excelKey of excelJsonKeys) {
-            let varName = JsonUtil.getKeyFromValue(mappingJson, excelKey);
-            if(targetedObjProperties.indexOf(varName) >= 0 ) {
-                Reflect.set(targetedObj, varName, row[excelKey]);
-            }
-        }
-        console.log(targetedObj);
-        data.push(targetedObj);
-    }
+
+function readTestData() {
+    let excelUtil = new ExcelUtil('./e2e/protractor/testdata/TestData.xlsx');
+    let data = excelUtil.getTestDataFromSheet('RegistrationPage', './e2e/protractor/mappings/registration-mapping.json');
+    return data;
 }

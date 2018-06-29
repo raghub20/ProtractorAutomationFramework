@@ -27,8 +27,8 @@ export class JsonUtil {
         return keys;
     }
 
-    public static async convertJsonFileToJsonObject(filePath: string): Promise<JSON> {
-        let data: string = await readFileSync(filePath, 'UTF-8');
-        return await Promise.resolve(JSON.parse(data));
+    public static convertJsonFileToJsonObject(filePath: string): JSON {
+        let data: string = readFileSync(filePath, 'UTF-8');
+        return JSON.parse(data);
     }
  }
