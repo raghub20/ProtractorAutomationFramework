@@ -25,8 +25,8 @@ exports.config = {
     * firefox. In order to use this configuration either of these browsers must be installed in 
     * script running machine.
     */
-    // directConnect: true,
-    seleniumServerJar: './node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-3.12.0.jar',
+    directConnect: true,
+    //seleniumServerJar: './node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-3.12.0.jar',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
